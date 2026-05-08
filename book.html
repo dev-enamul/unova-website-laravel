@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/fav-Icon.png">
+    <title>Book a Free Discovery Call | Unova AI Automation Bangladesh</title>
+    <meta name="description" content="Book a free call with Unova's AI experts. We'll study your business and show you exactly how AI can automate your work — no commitment, no tech knowledge needed.">
+    <meta name="keywords" content="book meeting Unova, AI automation consultation Bangladesh, free business audit Bangladesh, real estate AI consultation">
+    <meta property="og:title" content="Book a Free AI Consultation | Unova Bangladesh">
+    <meta property="og:description" content="Book a free discovery call with Unova. We'll audit your business and show you where AI can save you time and money.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unova.bd/book.html">
+    <meta property="og:image" content="https://unova.bd/assets/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Book a Free AI Consultation | Unova Bangladesh">
+    <meta name="twitter:description" content="Free discovery call — we'll study your business and show you how AI automation can help.">
+    <meta name="twitter:image" content="https://unova.bd/assets/logo.png">
+    <link rel="canonical" href="https://unova.bd/book.html">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Free AI Business Discovery Call with Unova",
+      "description": "Book a free consultation with Unova's AI experts. We audit your business and show you exactly how AI can automate your work.",
+      "url": "https://unova.bd/book.html",
+      "organizer": {
+        "@type": "Organization",
+        "name": "Unova",
+        "url": "https://unova.bd"
+      },
+      "location": {
+        "@type": "VirtualLocation",
+        "url": "https://calendly.com/unovabd/30min"
+      },
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "isAccessibleForFree": true
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .book-hero {
+            padding: 100px 0 16px;
+            text-align: center;
+        }
+
+        .book-hero h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .book-hero p {
+            font-size: 0.92rem;
+            color: var(--text-color);
+            max-width: 440px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .calendly-wrap {
+            padding: 72px 0 40px;
+        }
+
+        .calendly-inline-widget {
+            min-width: 320px;
+            height: 700px;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Unova Software" class="site-logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+                    <i class="ph ph-moon" id="darkModeIcon"></i>
+                </button>
+                <a href="book.html" class="btn btn-primary">Book a Meeting</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#products">Products</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html" class="btn btn-accent">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <!-- Calendly Embed -->
+    <section class="calendly-wrap">
+        <div class="container">
+            <div class="reveal-up" style="--delay:0.1s">
+                <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+                <script>
+                    var _calBase = 'https://calendly.com/unovabd/30min?hide_gdpr_banner=1';
+                    var _calDark = _calBase + '&background_color=151515&text_color=ffffff&primary_color=00d1c6';
+                    var _calUrl = localStorage.getItem('theme') === 'dark' ? _calDark : _calBase;
+                    document.write('<div class="calendly-inline-widget" id="calendlyWidget" data-url="' + _calUrl + '" style="min-width:320px;height:700px;"></div>');
+                </script>
+                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            setTimeout(function() {
+                var widget = document.getElementById('calendlyWidget');
+                var isDark = document.body.classList.contains('dark');
+                var base = 'https://calendly.com/unovabd/30min?hide_gdpr_banner=1';
+                var dark = base + '&background_color=151515&text_color=ffffff&primary_color=00d1c6';
+                var url = isDark ? dark : base;
+                widget.innerHTML = '';
+                widget.setAttribute('data-url', url);
+                Calendly.initInlineWidget({ url: url, parentElement: widget });
+            }, 80);
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Unova Software" class="site-logo"></a>
+                    <p>Bangladesh's leading AI automation company. We help businesses work smarter — less manual work, more results.</p>
+                    <div class="footer-contact-list">
+                        <div class="footer-contact-item">
+                            <i class="ph ph-envelope"></i>
+                            <a href="mailto:info@unova.bd">info@unova.bd</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="ph ph-phone"></i>
+                            <a href="tel:+8801766774016">+880 1766774016</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="ph ph-map-pin"></i>
+                            <span>Dhaka, Bangladesh</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/unovarem" target="_blank" rel="noopener" class="social-link" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+                        <a href="https://www.linkedin.com/company/theunova" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="https://estate.unova.bd" target="_blank" rel="noopener">UnovaEstate</a></li>
+                        <li><a href="index.html#products">NovaPath</a></li>
+                        <li><a href="index.html#products">NovaReach</a></li>
+                        <li><a href="index.html#products">NovaMach</a></li>
+                        <li><a href="index.html#products">View All →</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="book.html">Book a Meeting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Unova. All rights reserved.</p>
+                <div class="footer-bottom-badge">Made with <span>♥</span> in Bangladesh</div>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="ph ph-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
