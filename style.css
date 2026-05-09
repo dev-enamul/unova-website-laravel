@@ -2278,6 +2278,22 @@ body:not(.dark) .service-featured {
 
 .meet-image-link:hover .meet-img { transform: scale(1.03); }
 
+@media (max-width: 768px) {
+    .meet-widget {
+        width: 160px;
+        bottom: 20px;
+        left: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .meet-widget {
+        width: 140px;
+        bottom: 16px;
+        left: 12px;
+    }
+}
+
 /* ================================
    SCROLL REVEAL ANIMATIONS
 ================================ */
@@ -2512,13 +2528,7 @@ body:not(.dark) .service-featured {
     .contact-form { padding: 28px 20px; }
     .brands-header h2, .teams-header h2, .who-header h2 { font-size: 2.4rem; }
     .hero-neural-wrap { height: 340px; }
-    .neural-float { padding: 10px 13px; gap: 8px; border-radius: 11px; }
-    .neural-float i { font-size: 1rem; }
-    .nf-label { font-size: 0.68rem; }
-    .nf-val { font-size: 0.88rem; }
-    .neural-float-1 { top: 16px; left: 14px; }
-    .neural-float-2 { bottom: 40px; left: 14px; }
-    .neural-float-3 { right: 10px; }
+    .neural-float { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -2529,7 +2539,5 @@ body:not(.dark) .service-featured {
     .process-step { padding: 32px 24px; }
     .brand-card { padding: 28px; }
     .hero-neural-wrap { height: 280px; }
-    .neural-float-2 { display: none; }
-    .neural-float-1 { top: 12px; left: 10px; }
-    .neural-float-3 { right: 8px; }
+    .neural-float { display: none; }
 }
