@@ -284,14 +284,19 @@ if (meetWidget && meetClose) {
     let shown = false;
     let closed = false;
 
-    window.addEventListener('scroll', () => {
-        if (shown || closed) return;
-        const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-        if (scrolled >= 0.5) {
-            meetWidget.classList.add('show');
-            shown = true;
-        }
-    }, { passive: true });
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !shown && !closed) {
+                    meetWidget.classList.add('show');
+                    shown = true;
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(productsSection);
+    }
 
     meetClose.addEventListener('click', () => {
         meetWidget.classList.remove('show');
