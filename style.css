@@ -587,34 +587,118 @@ img { max-width: 100%; display: block; }
 
 .hero-image { flex: 1; position: relative; }
 
-.hero-image-wrapper { position: relative; }
-
-.hero-image-wrapper img {
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
+/* Neural Network Canvas */
+.hero-neural-wrap {
+    position: relative;
     width: 100%;
+    height: 500px;
 }
 
-.hero-float-card {
-    position: absolute;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 10px 16px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    box-shadow: var(--shadow-md);
-    animation: floatCard 3s ease-in-out infinite;
-    white-space: nowrap;
+#neuralCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
     z-index: 2;
 }
 
-.hero-float-card i { color: var(--accent-color); font-size: 1rem; }
-.hero-float-card.card-1 { top: 20px; left: -20px; animation-delay: 0s; }
-.hero-float-card.card-2 { bottom: 24px; right: -16px; animation-delay: 1.5s; }
+/* Neural Float Cards */
+.neural-float {
+    position: absolute;
+    z-index: 10;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: neuralFloat 4s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+.neural-float i {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.neural-float-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.nf-label {
+    font-size: 0.7rem;
+    color: var(--text-color);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.nf-val {
+    font-size: 0.88rem;
+    color: var(--text-heading);
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.nf-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    box-shadow: 0 0 8px var(--accent-color);
+    animation: dotPulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.neural-float-1 {
+    top: 24px;
+    left: 20px;
+    animation-duration: 4.5s;
+    animation-delay: 0s;
+}
+
+.neural-float-2 {
+    bottom: 60px;
+    left: 20px;
+    animation-duration: 5.5s;
+    animation-delay: 1.8s;
+}
+
+.neural-float-3 {
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    animation-delay: 2.1s;
+}
+
+@keyframes neuralFloat {
+    0%   { transform: translateY(0px) scale(1); }
+    30%  { transform: translateY(-10px) scale(1.02); }
+    60%  { transform: translateY(-5px) scale(0.99); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+.neural-float-3 {
+    animation: neuralFloat3 5s ease-in-out infinite;
+    animation-delay: 2.1s;
+}
+
+@keyframes neuralFloat3 {
+    0%   { transform: translateY(-50%) translateX(0px) scale(1); }
+    30%  { transform: translateY(calc(-50% - 10px)) translateX(3px) scale(1.02); }
+    60%  { transform: translateY(calc(-50% - 4px)) translateX(-2px) scale(0.99); }
+    100% { transform: translateY(-50%) translateX(0px) scale(1); }
+}
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--accent-color); }
+    50% { opacity: 0.5; transform: scale(0.65); box-shadow: 0 0 4px var(--accent-color); }
+}
 
 @keyframes floatCard {
     0%, 100% { transform: translateY(0px); }
@@ -626,7 +710,6 @@ img { max-width: 100%; display: block; }
     padding: 28px;
     border-radius: 16px;
     max-width: 92%;
-    box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-subtle);
 }
 
@@ -2400,6 +2483,8 @@ body:not(.dark) .service-featured {
     .footer-cta { flex-direction: column; align-items: flex-start; gap: 20px; }
     .cta-inner { padding: 60px 40px; }
     .cta-inner h2 { font-size: 2.6rem; }
+    .hero-neural-wrap { height: 400px; }
+    .neural-float-3 { right: 12px; }
 }
 
 @media (max-width: 768px) {
@@ -2426,6 +2511,14 @@ body:not(.dark) .service-featured {
     .form-row { grid-template-columns: 1fr; }
     .contact-form { padding: 28px 20px; }
     .brands-header h2, .teams-header h2, .who-header h2 { font-size: 2.4rem; }
+    .hero-neural-wrap { height: 340px; }
+    .neural-float { padding: 10px 13px; gap: 8px; border-radius: 11px; }
+    .neural-float i { font-size: 1rem; }
+    .nf-label { font-size: 0.68rem; }
+    .nf-val { font-size: 0.88rem; }
+    .neural-float-1 { top: 16px; left: 14px; }
+    .neural-float-2 { bottom: 40px; left: 14px; }
+    .neural-float-3 { right: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -2435,4 +2528,8 @@ body:not(.dark) .service-featured {
     .cta-inner h2 { font-size: 1.75rem; }
     .process-step { padding: 32px 24px; }
     .brand-card { padding: 28px; }
+    .hero-neural-wrap { height: 280px; }
+    .neural-float-2 { display: none; }
+    .neural-float-1 { top: 12px; left: 10px; }
+    .neural-float-3 { right: 8px; }
 }

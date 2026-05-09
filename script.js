@@ -1,4 +1,196 @@
 /* ================================
+   NEURAL NETWORK ANIMATION
+================================ */
+(function () {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const ACCENT  = '#00D1C6';
+    const PURPLE  = '#6C63FF';
+    const PINK    = '#FF6B9D';
+    const WHITE   = '#ffffff';
+    const COLORS  = [ACCENT, ACCENT, ACCENT, PURPLE, PURPLE, PINK, WHITE];
+
+    let W, H, nodes, pulses, frame;
+    const COUNT = 62;
+    const LINK_DIST = 130;
+    const mouse = { x: -9999, y: -9999 };
+
+    function hexRgba(hex, a) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r},${g},${b},${a})`;
+    }
+
+    class Node {
+        constructor() {
+            this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            this.x  = Math.random() * W;
+            this.y  = Math.random() * H;
+            const ang = Math.random() * Math.PI * 2;
+            const spd = Math.random() * 0.4 + 0.2;
+            this.vx = Math.cos(ang) * spd;
+            this.vy = Math.sin(ang) * spd;
+            this.baseR = Math.random() * 3.5 + 1.5;
+            this.r  = this.baseR;
+            this.alpha = Math.random() * 0.4 + 0.55;
+            this.phase = Math.random() * Math.PI * 2;
+            this.speed = Math.random() * 0.018 + 0.008;
+            this.active = Math.random() < 0.28;
+            this.glowSize = this.active ? 18 : 7;
+        }
+        update() {
+            const dx = this.x - mouse.x, dy = this.y - mouse.y;
+            const d  = Math.sqrt(dx * dx + dy * dy);
+            if (d < 110 && d > 0) {
+                const f = (110 - d) / 110 * 0.35;
+                this.vx += dx / d * f;
+                this.vy += dy / d * f;
+            }
+            this.vx *= 0.998; this.vy *= 0.998;
+            // Enforce minimum speed so nodes never stop
+            const spd = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+            if (spd < 0.15) { this.vx = this.vx / spd * 0.15; this.vy = this.vy / spd * 0.15; }
+            this.x  += this.vx; this.y += this.vy;
+            if (this.x < 0 || this.x > W) this.vx *= -1;
+            if (this.y < 0 || this.y > H) this.vy *= -1;
+            this.x = Math.max(0, Math.min(W, this.x));
+            this.y = Math.max(0, Math.min(H, this.y));
+            this.phase += this.speed;
+            const p = Math.sin(this.phase);
+            this.r = this.baseR + (this.active ? p * 1.8 : p * 0.4);
+            this.curAlpha = this.alpha + (this.active ? p * 0.25 : 0);
+        }
+        draw() {
+            const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.glowSize);
+            g.addColorStop(0, hexRgba(this.color, this.curAlpha * 0.55));
+            g.addColorStop(1, hexRgba(this.color, 0));
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.glowSize, 0, Math.PI * 2);
+            ctx.fillStyle = g;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.curAlpha;
+            ctx.fill();
+            if (this.r > 2.5) {
+                ctx.beginPath();
+                ctx.arc(this.x - this.r * 0.25, this.y - this.r * 0.25, this.r * 0.4, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    class Pulse {
+        constructor(a, b) {
+            this.a = a; this.b = b;
+            this.t = 0;
+            this.speed = Math.random() * 0.018 + 0.009;
+            this.color = a.color;
+            this.sz = Math.random() * 2.5 + 1.2;
+        }
+        update() { this.t += this.speed; return this.t < 1; }
+        draw() {
+            const x = this.a.x + (this.b.x - this.a.x) * this.t;
+            const y = this.a.y + (this.b.y - this.a.y) * this.t;
+            const tail = Math.max(0, this.t - 0.12);
+            const tx = this.a.x + (this.b.x - this.a.x) * tail;
+            const ty = this.a.y + (this.b.y - this.a.y) * tail;
+            const grad = ctx.createLinearGradient(tx, ty, x, y);
+            grad.addColorStop(0, hexRgba(this.color, 0));
+            grad.addColorStop(1, hexRgba(this.color, 0.8));
+            ctx.beginPath();
+            ctx.moveTo(tx, ty); ctx.lineTo(x, y);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = this.sz * 0.9;
+            ctx.stroke();
+            const hg = ctx.createRadialGradient(x, y, 0, x, y, this.sz * 3.5);
+            hg.addColorStop(0, hexRgba(this.color, 0.9));
+            hg.addColorStop(1, hexRgba(this.color, 0));
+            ctx.beginPath(); ctx.arc(x, y, this.sz * 3.5, 0, Math.PI * 2);
+            ctx.fillStyle = hg; ctx.fill();
+            ctx.beginPath(); ctx.arc(x, y, this.sz, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff'; ctx.globalAlpha = 0.95; ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    function resize() {
+        const w = canvas.offsetWidth, h = canvas.offsetHeight;
+        if (w > 0 && h > 0) { W = canvas.width = w; H = canvas.height = h; }
+    }
+
+    let tick = 0;
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const d  = Math.sqrt(dx * dx + dy * dy);
+                if (d < LINK_DIST) {
+                    const alpha = (1 - d / LINK_DIST) * 0.28;
+                    const gl = ctx.createLinearGradient(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+                    gl.addColorStop(0, hexRgba(nodes[i].color, alpha));
+                    gl.addColorStop(1, hexRgba(nodes[j].color, alpha));
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.strokeStyle = gl;
+                    ctx.lineWidth = (1 - d / LINK_DIST) * 1.1;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        tick++;
+        if (tick % 22 === 0) {
+            const from = nodes[Math.floor(Math.random() * nodes.length)];
+            const near = nodes.filter(n => n !== from && Math.hypot(n.x - from.x, n.y - from.y) < LINK_DIST);
+            if (near.length) pulses.push(new Pulse(from, near[Math.floor(Math.random() * near.length)]));
+        }
+
+        pulses = pulses.filter(p => { p.draw(); return p.update(); });
+        nodes.forEach(n => { n.update(); n.draw(); });
+
+        frame = requestAnimationFrame(draw);
+    }
+
+    canvas.addEventListener('mousemove', e => {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    window.addEventListener('resize', () => {
+        cancelAnimationFrame(frame);
+        resize();
+        if (W > 0 && H > 0) draw();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) { cancelAnimationFrame(frame); frame = requestAnimationFrame(draw); }
+    });
+
+    function start() {
+        resize();
+        if (W === 0 || H === 0) { requestAnimationFrame(start); return; }
+        nodes  = Array.from({ length: COUNT }, () => new Node());
+        pulses = [];
+        draw();
+    }
+
+    requestAnimationFrame(start);
+})();
+
+/* ================================
    PRELOADER
 ================================ */
 window.addEventListener('load', () => {
@@ -269,10 +461,60 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
 /* ================================
    ACTIVE NAV LINK
 ================================ */
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === currentPage);
-});
+(function () {
+    const allNavLinks = document.querySelectorAll('.nav-links a');
+    const path = window.location.pathname;
+    const pageSeg = path.split('/').pop().replace('.html', '') || 'index';
+
+    function setActive(matchHref) {
+        allNavLinks.forEach(l => l.classList.remove('active'));
+        allNavLinks.forEach(l => {
+            if (l.getAttribute('href') === matchHref) l.classList.add('active');
+        });
+    }
+
+    // Detect current page and set active
+    allNavLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        const linkSeg = href.split('/').pop().replace('.html', '').split('#')[0] || 'index';
+        if (linkSeg === pageSeg && !href.startsWith('#')) {
+            link.classList.add('active');
+        }
+    });
+
+    // Click → immediate active
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            setActive(this.getAttribute('href'));
+        });
+    });
+
+    // On index page: watch sections via scroll
+    if (pageSeg === 'index') {
+        const sections = [
+            { id: 'products', href: '#products' },
+            { id: 'services', href: '#services' }
+        ];
+
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const s = sections.find(x => x.id === entry.target.id);
+                    if (s) setActive(s.href);
+                }
+            });
+        }, { threshold: 0.25, rootMargin: '-70px 0px -35% 0px' });
+
+        sections.forEach(s => {
+            const el = document.getElementById(s.id);
+            if (el) obs.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY < 200) setActive('index.html');
+        }, { passive: true });
+    }
+})();
 
 /* ================================
    BOOK A MEETING WIDGET
