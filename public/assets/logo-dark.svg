@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" width="260" height="64">
+
+  <!-- Green rounded icon background -->
+  <rect x="2" y="4" width="56" height="56" rx="13" fill="#6DC042"/>
+
+  <!-- Waveform bars inside icon -->
+  <rect x="11" y="22" width="5" height="20" rx="2.5" fill="white"/>
+  <rect x="19" y="15" width="5" height="34" rx="2.5" fill="white"/>
+  <rect x="27" y="19" width="5" height="26" rx="2.5" fill="white"/>
+  <rect x="35" y="13" width="5" height="38" rx="2.5" fill="white"/>
+  <rect x="43" y="20" width="5" height="24" rx="2.5" fill="white"/>
+
+  <!-- Sparkle dots (top right of icon) -->
+  <circle cx="57" cy="9"  r="2.2" fill="white" opacity="0.85"/>
+  <circle cx="64" cy="4"  r="1.5" fill="white" opacity="0.65"/>
+  <circle cx="62" cy="14" r="1.2" fill="white" opacity="0.5"/>
+
+  <!-- UNOVA text - white for dark mode -->
+  <text
+    x="72" y="36"
+    font-family="'Arial Black', 'Outfit', Impact, sans-serif"
+    font-weight="900"
+    font-size="28"
+    fill="#FFFFFF"
+    letter-spacing="-0.5">UNOVA</text>
+
+  <!-- SOFTWARE text - muted white -->
+  <text
+    x="73" y="52"
+    font-family="'Arial', 'Outfit', sans-serif"
+    font-weight="500"
+    font-size="10"
+    fill="rgba(255,255,255,0.55)"
+    letter-spacing="5.5">SOFTWARE</text>
+
+</svg>

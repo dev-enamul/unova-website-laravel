@@ -3,7 +3,37 @@
     "allow": [
       "WebFetch(domain:github.com)",
       "Bash(gh repo *)",
-      "Bash(gh api *)"
+      "Bash(gh api *)",
+      "Bash(php -v)",
+      "Bash(composer -V)",
+      "Bash(grep -n \"extension=intl\\\\|extension_dir\" \"C:/xampp/php/php.ini\" | head -10)",
+      "Read(//c/xampp/php/**)",
+      "Bash(ls \"C:/xampp/php/ext/php_intl.dll\" 2>&1)",
+      "Read(//c/xampp/php/ext/**)",
+      "Bash(php -m)",
+      "Bash(php artisan *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:8765/login)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:8765/admin/login)",
+      "Bash(curl -s -o /dev/null -w \"/login -> %{http_code}\\\\n\" -L http://127.0.0.1:8765/login)",
+      "Bash(curl -s -o /dev/null -w \"/admin/login -> %{http_code}\\\\n\" http://127.0.0.1:8765/admin/login)",
+      "Bash(taskkill //F //IM php.exe //T)",
+      "Bash(npm -v)",
+      "Bash(composer remove *)",
+      "Bash(composer dump-autoload *)",
+      "Bash(curl -s -o /dev/null -w \"GET /dashboard \\(no auth, no follow\\) -> %{http_code}\\\\n\" http://127.0.0.1:8765/dashboard)",
+      "Bash(curl -s -I http://127.0.0.1:8765/dashboard)",
+      "WebFetch(domain:www.estate.unova.bd)",
+      "Bash(curl -s http://127.0.0.1:8765/)",
+      "Bash(curl -s http://127.0.0.1:8765/industries/real-estate)",
+      "Bash(php -l resources/views/pages/industries/real-estate.blade.php)",
+      "Bash(npm ls *)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(curl -s http://127.0.0.1:8123/industries/real-estate)",
+      "Bash(grep -o 'Key Business.\\\\{0,30\\\\}' /tmp/page.html)",
+      "Bash(taskkill //F //IM php.exe)"
+    ],
+    "additionalDirectories": [
+      "C:\\xampp\\php"
     ]
   }
 }
